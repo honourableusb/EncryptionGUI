@@ -21,6 +21,7 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 	private JComboBox<Character> zeroEquals = new JComboBox<Character>(emptySpaceOrZeroEq);
 	private JComboBox<Character> emptySpace = new JComboBox<Character>(emptySpaceOrZeroEq);
 	private JComboBox<Character> aEquals = new JComboBox<Character>(aEqualsChoice);
+	private JFileChooser fileInput = new JFileChooser();
 	private JLabel outputLabel = new JLabel("<html><style>p {text-align: center;}</style> <p><br/>For decrypting encrypted messages</p></html>");
 	private JLabel messageLabel1 = new JLabel("<html><style>p {text-align: center;}</style>"
 			+ "<p>You can either enter a filename, or a plaintext message.<br/>"
@@ -29,21 +30,22 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 	private JLabel spaceLabel = new JLabel("Enter amount of dummy characters");
 	private JLabel alphaLabel = new JLabel("Enter what A should be equal to (Caesar Cipher)");
 	private JLabel numLabel = new JLabel("Enter what 0 should equal (Number Caesar Cipher)");
-	private JLabel breakLabel = new JLabel("<html><p> <br/> </p></html>");
 	private JPanel inputPanel = new JPanel();
 	private JTextField inField = new JTextField("", 30);
 	private JTextField outField = new JTextField("", 30);
+	File inputFile;
 	
 	GUI()
 	{
 		setTitle("Message Encryptor/Decryptor");
-		
-		
 		setSize(525,350);
+		fileInput.setMultiSelectionEnabled(false);
 		inputPanel.setSize(500, 250);
 		inputPanel.add(messageLabel1);
 		//inputPanel.add(messageLabel2);
 		inputPanel.add(inField);
+		fileChoice.addActionListener(this);
+		fileChoice.setActionCommand("Encrypt file selection");
 		inputPanel.add(fileChoice);
 		//inputPanel.add(breakLabel);
 		inputPanel.add(spaceLabel);
@@ -55,10 +57,16 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 		inputPanel.add(numLabel);
 		inputPanel.add(zeroEquals);
 		//inputPanel.add(breakLabel);
+		encrypt.addActionListener(this);
+		encrypt.setActionCommand("Encrypt");
 		inputPanel.add(encrypt);
 		inputPanel.add(outputLabel);
 		inputPanel.add(outField);
+		fileChoiceD.addActionListener(this);
+		fileChoiceD.setActionCommand("Decrypt file selection");
 		inputPanel.add(fileChoiceD);
+		decrypt.addActionListener(this);
+		decrypt.setActionCommand("Decrypt");
 		inputPanel.add(decrypt);
 		add(inputPanel);
 		addWindowListener(this);
@@ -69,7 +77,40 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		String actionName = e.getActionCommand();
+		//if the action is received from a 'Select file...' button, open a file dialog.
+		if(actionName.equals("Encrypt file selection") || actionName.equals("Decrypt file selection")) 
+		{
+			/* fileInput.setVisible(true); */
+			int returnVal = fileInput.showOpenDialog(this);
+			if(returnVal == JFileChooser.APPROVE_OPTION)
+			{
+				inputFile = fileInput.getSelectedFile();
+				if(actionName.equals("Encrypt file selection"))
+					inField.setText(inputFile.getAbsolutePath());
+				else
+					outField.setText(inputFile.getAbsolutePath());
+			}
+		}
+		//If the encrypt button is pressed
+		if(actionName.equals("Encrypt"))
+		{
+			//TODO What happens when you press the magic button?
+			/*  1. Checks if file exists, if not, throw an error
+			 *  2. Check that all the dropdown menus are completed, if not throw an error
+			 *  3. ???
+			 *  4. Profit
+			 */
+		}
+		//If the decrypt button is pressed
+		if(actionName.equals("Decrypt"))
+		{
+			//TODO What happens when you press the antimagic button?
+			/*  1. Checks that the file exists, if not throw an error
+			 *  2. ???
+			 *  3. Profit 
+			 */
+		}
 	}
 
 	@Override
