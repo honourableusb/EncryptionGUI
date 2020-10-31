@@ -33,7 +33,8 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 	private JPanel inputPanel = new JPanel();
 	private JTextField inField = new JTextField("", 30);
 	private JTextField outField = new JTextField("", 30);
-	File inputFile;
+	File encryptFile;
+	File decryptFile;
 	
 	GUI()
 	{
@@ -85,23 +86,44 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 			int returnVal = fileInput.showOpenDialog(this);
 			if(returnVal == JFileChooser.APPROVE_OPTION)
 			{
-				inputFile = fileInput.getSelectedFile();
 				if(actionName.equals("Encrypt file selection"))
-					inField.setText(inputFile.getAbsolutePath());
+				{
+					encryptFile = fileInput.getSelectedFile();
+					inField.setText(encryptFile.getAbsolutePath());
+				}
 				else
-					outField.setText(inputFile.getAbsolutePath());
+				{
+					decryptFile = fileInput.getSelectedFile();
+					outField.setText(decryptFile.getAbsolutePath());
+				}
 			}
 		}
 		//If the encrypt button is pressed
 		if(actionName.equals("Encrypt"))
 		{
 			//TODO What happens when you press the magic button?
-			/*  1. Checks if file exists, if not, throw an error
+			/*  0. Check if the input field is a plaintext message
+			 *  1. Checks if file exists, if not, throw an error
 			 *  2. Check that all the dropdown menus are completed, if not throw an error
 			 *  3. ???
 			 *  4. Profit
 			 */
-			System.out.println("Magic Button");
+			//If the user manually entered the file, we don't want them getting avoided because they didn't use the file selection button!
+			encryptFile = new File(inField.getText());
+			String inputText = inField.getText();
+			//if the input entered was plaintext (denoted by ** at the beginning)
+			if(inputText.startsWith("**"))
+			{
+				
+			}
+			else if(encryptFile.exists()) //check file exists, if not throw an error
+			{
+				
+			}
+			else
+			{
+				new JOptionPane("Please enter a file");
+			}
 		}
 		//If the decrypt button is pressed
 		if(actionName.equals("Decrypt"))
