@@ -101,6 +101,7 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 			 *  3. ???
 			 *  4. Profit
 			 */
+			System.out.println("Magic Button");
 		}
 		//If the decrypt button is pressed
 		if(actionName.equals("Decrypt"))
@@ -110,6 +111,7 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 			 *  2. ???
 			 *  3. Profit 
 			 */
+			System.out.println("Antimagic Button");
 		}
 	}
 
