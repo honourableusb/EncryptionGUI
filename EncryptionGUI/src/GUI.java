@@ -114,15 +114,16 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 			//if the input entered was plaintext (denoted by ** at the beginning)
 			if(inputText.startsWith("**"))
 			{
-				
+				System.out.println("Text");
 			}
 			else if(encryptFile.exists()) //check file exists, if not throw an error
 			{
-				
+				System.out.println("File");
 			}
 			else
 			{
-				new JOptionPane("Please enter a file");
+				System.out.println("Not file nor text");
+				new JOptionPane("Please enter a file or message");
 			}
 		}
 		//If the decrypt button is pressed
@@ -133,7 +134,23 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 			 *  2. ???
 			 *  3. Profit 
 			 */
-			System.out.println("Antimagic Button");
+			//If the user manually entered the file, we don't want them getting avoided because they didn't use the file selection button!
+			encryptFile = new File(outField.getText());
+			String inputText = outField.getText();
+			//if the input entered was plaintext (denoted by ** at the beginning)
+			if(inputText.startsWith("**"))
+			{
+				System.out.println("Text");
+			}
+			else if(encryptFile.exists()) //check file exists, if not throw an error
+			{
+				System.out.println("File");
+			}
+			else
+			{
+				System.out.println("Not file nor text");
+				new JOptionPane("Please enter a file or message");
+			}
 		}
 	}
 
