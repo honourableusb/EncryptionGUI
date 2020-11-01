@@ -33,12 +33,12 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 			+ "<br/>For Encryption </p></html>");
 	private JLabel spaceLabel = new JLabel("Enter amount of dummy characters");
 	private JLabel alphaLabel = new JLabel("Enter what A should be equal to (Caesar Cipher)");
-	private JLabel numLabel = new JLabel("Enter what 0 should equal (Number Caesar Cipher)");
+	private JLabel numLabel = new JLabel("Enter what 0 should equal (Special Character Caesar Cipher)");
 	private JPanel inputPanel = new JPanel();
 	private JTextField inField = new JTextField("", 30);
 	private JTextField outField = new JTextField("", 30);
-	File encryptFile;
-	File decryptFile;
+	static File encryptFile;
+	static File decryptFile;
 	private static boolean isEncryption;
 	private static boolean isFile;
 	private boolean allFieldsFilled;
@@ -90,6 +90,10 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 	public static boolean isReady() { return ready;}
 	
 	public static char[] getCipherChoices() {return cipherChoices;}
+	
+	public static File getEncryptFile() {return encryptFile;}
+	
+	public static File getDecryptFile() {return decryptFile;}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
