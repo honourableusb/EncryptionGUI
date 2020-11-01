@@ -39,8 +39,8 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 	private JTextField outField = new JTextField("", 30);
 	File encryptFile;
 	File decryptFile;
-	private boolean isEncryption;
-	private boolean isFile;
+	private static boolean isEncryption;
+	private static boolean isFile;
 	private boolean allFieldsFilled;
 	private static boolean ready = false;
 	private static char[] cipherChoices;
@@ -83,9 +83,9 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 		setVisible(true);
 	}
 	
-	public boolean isAFile() { return isFile;}
+	public static boolean isAFile() { return isFile;}
 	
-	public boolean isEncryption() { return isEncryption;}
+	public static boolean isEncryption() { return isEncryption;}
 	
 	public static boolean isReady() { return ready;}
 	
