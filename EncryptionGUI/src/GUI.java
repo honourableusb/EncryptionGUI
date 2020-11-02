@@ -33,10 +33,10 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 			+ "<br/>For Encryption </p></html>");
 	private JLabel spaceLabel = new JLabel("Enter amount of dummy characters");
 	private JLabel alphaLabel = new JLabel("Enter what A should be equal to (Caesar Cipher)");
-	private JLabel numLabel = new JLabel("Enter what 0 should equal (Special Character Caesar Cipher)");
+	private JLabel numLabel = new JLabel("Enter what 0 should equal (Number/Special Character Caesar Cipher)");
 	private JPanel inputPanel = new JPanel();
-	private JTextField inField = new JTextField("", 30);
-	private JTextField outField = new JTextField("", 30);
+	private static JTextField inField = new JTextField("", 30);
+	private static JTextField outField = new JTextField("", 30);
 	static File encryptFile;
 	static File decryptFile;
 	private static boolean isEncryption;
@@ -95,6 +95,10 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 	
 	public static File getDecryptFile() {return decryptFile;}
 	
+	public static String getEncryptField() {return inField.getText();}
+	
+	public static String getDecryptField() {return outField.getText();}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -148,6 +152,8 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 			{
 				//System.out.println("Not file nor text");
 				JOptionPane.showMessageDialog(this,"Please enter a file or plain text message (Note: plain text messages must start with \"**\")");
+				ready = false;
+				return;
 			}
 			cipherChoices = new char[]{(char) emptySpace.getSelectedItem(), (char) aEquals.getSelectedItem(), (char)zeroEquals.getSelectedItem()};
 			/* System.out.print(cipherChoices[0]); */
@@ -165,6 +171,7 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 			else // if a field isn't filled, throw an error
 			{
 				JOptionPane.showMessageDialog(this,"Please fill out all drop-down boxes");
+				ready = false;
 				return;
 			}
 		
@@ -196,6 +203,7 @@ public class GUI extends JFrame implements WindowListener,ActionListener{
 			{
 				System.out.println("Not file nor text");
 				JOptionPane.showMessageDialog(this,"Please enter a file or plain text message (Note: plain text messages must start with \"**\")");
+				ready = false;
 				return;
 			}
 			ready = true;

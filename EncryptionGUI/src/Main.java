@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 
 /* EncryptionGUI.java main - This is the main driver of the code
- * Logic in progress
+ * Logic in progress - I am not smart
  */
 
 public class Main {
@@ -88,7 +88,9 @@ public class Main {
 		}
 		else // if not, use this way!
 		{
-			
+			String message = GUI.getEncryptField().replace("**","");
+			System.out.println(message);
+			messUpLine(message, cipherChoices);
 		}
 	}
 	
@@ -104,20 +106,19 @@ public class Main {
 		Random r = new Random(System.nanoTime());
 		final int RANGE = 93; //the amount of characters we can choose from is 93, ascii values 33-126
 		final int LOWER_BOUND = 33; //the first character we can pick for random generation (!)
-		final int INTEGER_START = 48; //the ascii value of 0
+		final int INTEGER_START = 48; //the ascii value of 0		
 		
 		int dummyCharacterAMT = cipherChoices[0] - INTEGER_START;
-		System.out.println(dummyCharacterAMT);
 		char characterShift = cipherChoices[1];
-		int numberShift = (int)cipherChoices[2];
+		int numberShift = (int)cipherChoices[2] - INTEGER_START;
 		
+		int characterDifference = characterShift - 'A';
 		StringBuilder newLine = new StringBuilder();
 		
 		//adding dummy characters
 		for(int i = 0; i < line.length(); i++)
 		{
 			newLine.append(line.charAt(i));
-			//System.out.println("Before adding dummy characters: " + newLine);
 			for (int j = 0; j < dummyCharacterAMT; j++)
 			{
 				int asciiVal = r.nextInt(RANGE) + LOWER_BOUND;
@@ -128,9 +129,74 @@ public class Main {
 		}
 		System.out.println(newLine);
 		r = null;
+		
+		//Caesar cipher(s)		
+		for(int i = 0; i < newLine.length(); i++)
+		{
+			if(isAlpha(newLine.charAt(i)))
+			{
+				newLine.setCharAt(i, alphaShift(newLine.charAt(i), characterDifference));
+			}
+			else if(!isUneditable(newLine.charAt(i)))
+			{
+				//System.out.println("Not character");
+			}
+			else
+			{
+				//The character is a space
+			}
+		}
+		System.out.println(newLine);
 		return newLine.toString();
 	}
 	
+	private static char alphaShift(char value, int difference)
+	{
+		char newValue = (char)(value + difference);
+		//wraparound function to ensure that alphabet stays alphabet
+		//if the new character value is not a character anymore, wrap around to the next characters
+		if((newValue < 97 && newValue > 90) || (newValue > 122))
+		{
+			if(newValue > 90 && newValue < 97) //if it was originally 
+			{
+				int wraparound = (int)(newValue - 'Z') - 1;
+				newValue = (char)('a' + wraparound);
+			}
+			else
+			{
+				int wraparound = (int)(newValue - 'z') -1;
+				newValue = (char)('A' + wraparound);
+			}
+			//System.out.printf("Original char: %c New char: %c\n", value, newValue);
+		}
+		return newValue;
+	}
+	
+	
+	/**
+	 * This function evaluates the character passed to it, and returns depending on the 
+	 * program's capability to edit it.
+	 * The program will not edit spaces, ascii values 0-31, or the delete ascii value.
+	 * It may later.
+	 * @param charAt The evaluated character
+	 * @return false if a number, letter, or special character (#$^*@), true otherwise
+	 */
+	private static boolean isUneditable(char charAt) 
+	{
+		int indexValue = charAt;
+		if (indexValue <= 32 || indexValue == 127)
+			return true;
+		return false;
+	}
+	
+	private static boolean isAlpha(char charAt) {
+		int indexValue = (int)charAt;
+		//if the character is either a lowercase letter or uppercase letter, return true
+		if((indexValue < 91 && indexValue > 64) || (indexValue < 123 && indexValue > 96))
+			return true;
+		return false;
+	}
+
 	public static void decrypt()
 	{
 		boolean isFile = GUI.isAFile();
