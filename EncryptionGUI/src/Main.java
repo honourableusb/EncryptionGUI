@@ -139,17 +139,22 @@ public class Main {
 			}
 			else if(!isUneditable(newLine.charAt(i)))
 			{
-				//System.out.println("Not character");
+				newLine.setCharAt(i,numShift(newLine.charAt(i), numberShift));
 			}
 			else
 			{
-				//The character is a space
+				//The character is a space or special ascii character
 			}
 		}
 		System.out.println(newLine);
 		return newLine.toString();
 	}
 	
+	private static char numShift(char charAt, int numberShift) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	private static char alphaShift(char value, int difference)
 	{
 		char newValue = (char)(value + difference);
