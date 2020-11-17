@@ -127,7 +127,7 @@ public class Main {
 				//System.out.println(newLine);
 			}
 		}
-		System.out.println(newLine);
+		//System.out.println(newLine);
 		r = null;
 		
 		//Caesar cipher(s)		
@@ -143,16 +143,45 @@ public class Main {
 			}
 			else
 			{
-				//The character is a space or special ascii character
+				//The character is a space or special ascii character that does not have a visible implementation (\t,\n, and more)
 			}
 		}
 		System.out.println(newLine);
 		return newLine.toString();
 	}
 	
+	
+	//This method can be altered in the future, when I choose to increase the amount a value is shifted by.
 	private static char numShift(char charAt, int numberShift) {
 		// TODO Auto-generated method stub
-		return 0;
+		char newValue = (char)(charAt + numberShift);
+		boolean valid = false;
+		//wraparound to ensure what is numbers or special characters remain that way
+		//if the new value is in uppercase alpha, lowercase alpha, or beyond the standard ascii table
+		//This is in a loop because there are cases where a section can be entirely skipped over 
+		//(@(64) + 9 shift passes over the next section of special characters ([-` (91-96)) entirely) 
+		do
+		{
+			int wraparound = -1;
+		if((newValue > 64 && newValue < 91)) // if the new value is in uppercase alpha
+		{
+			wraparound = (int)(newValue - '@') - 1;
+			newValue = (char)('[' + wraparound);
+		}
+		else if((newValue > 96 && newValue < 123)) // if the new value is in lowercase alpha
+		{
+			wraparound = (int)(newValue - '`') - 1;
+			newValue = (char)('{' + wraparound);
+		}
+		else if (newValue > 126) // if the new value is beyond standard ascii
+		{
+			wraparound = (int)(newValue - '~') - 1;
+			newValue = (char)('!' + wraparound);
+		}
+		else //if everything is done correctly!
+			valid = true;
+		} while (!valid);
+		return newValue;
 	}
 
 	private static char alphaShift(char value, int difference)
@@ -160,9 +189,10 @@ public class Main {
 		char newValue = (char)(value + difference);
 		//wraparound function to ensure that alphabet stays alphabet
 		//if the new character value is not a character anymore, wrap around to the next characters
-		if((newValue < 97 && newValue > 90) || (newValue > 122))
+
+		if((newValue > 90 && value < 91) || (newValue > 122))
 		{
-			if(newValue > 90 && newValue < 97) //if it was originally 
+			if(newValue > 90 && value < 91) //if the original character was an uppercase character, and has gone past uppercase bounds 
 			{
 				int wraparound = (int)(newValue - 'Z') - 1;
 				newValue = (char)('a' + wraparound);
