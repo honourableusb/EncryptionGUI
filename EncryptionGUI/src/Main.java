@@ -43,6 +43,12 @@ public class Main {
 	{
 		char[] cipherChoices = GUI.getCipherChoices();
 		boolean isFile = GUI.isAFile();
+		Random r = new Random(System.currentTimeMillis());
+		//haha we're encrypting this file twice now
+		char[] firstEncryption = new char[3];
+		firstEncryption[0] = '0';
+		firstEncryption[1] = (char) (r.nextInt(26) + 65);
+		firstEncryption[2] = (char) (r.nextInt(10) + 48);
 		if(isFile) // if our input method is a file, use this way of extracting the message.
 			//there is also a different method of storing the key for files as opposed to plaintext.
 		{
@@ -75,11 +81,16 @@ public class Main {
 				System.exit(1);
 
 			}
+			
 			for(int i = 0; i < lineCount; i++)
 			{
 				message[i] = fileIn.nextLine();
+				message[i] = messUpLine(message[i], firstEncryption);
 				message[i] = messUpLine(message[i], cipherChoices);
 			}
+			//Now we need to append the key!
+			
+			
 			//test code, print our message
 			/*
 			 * for(String line : message) { System.out.println(line); }
@@ -89,8 +100,10 @@ public class Main {
 		else // if not, use this way!
 		{
 			String message = GUI.getEncryptField().replace("**","");
-			System.out.println(message);
-			messUpLine(message, cipherChoices);
+			//System.out.println(message);
+			message = messUpLine(message, firstEncryption);
+			message = messUpLine(message, cipherChoices);
+			
 		}
 	}
 	
